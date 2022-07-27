@@ -1,0 +1,58 @@
+
+
+create proc RegistrarUsuario(@Nombre varchar(100),@Apellido varchar(100), @NumDocumento varchar(100),@TipoDocumento int,@Direccion varchar(100),@Correo varchar(100),@Contrasena varchar(100))
+as 
+begin
+insert into Usuario(Nombre,Apellido,Ndocumento,TipoDocumento,Direccion,Correo,Contrasena,Rol,Disponible)values(@Nombre,@Apellido ,@NumDocumento,@TipoDocumento,@Direccion,@Correo,@Contrasena,1,1)
+end
+
+
+
+
+
+create procedure registrarTipoDocumentos(@nombre varchar (50))
+as
+begin
+insert into TipoDocumentos(nombre)
+values(@nombre)
+end
+
+
+create proc registroRepuesto(@Nombre varchar(50) ,@PrecioUnitario int ,@UnidadesDisponibles int )
+as
+begin
+insert into Repuesto (Nombre,PrecioUnitario,UnidadesDisponibles)values(@Nombre,@PrecioUnitario,@UnidadesDisponibles)
+end
+
+
+CREATE PROC RegistroMecanico(@PrimerNombre varchar(50),@SegundoNombre varchar(50),@PrimerApellido varchar(50),@SegundoApellido varchar(50),@NDocumento varchar(50),@TipoDocumento int,@Telefono varchar(50),@Direccion varchar(50))
+as
+begin
+insert into Mecanico(PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,NDocumento,TipoDocumento,Telefono,Direccion,Estado)values(@PrimerNombre,@SegundoNombre,@PrimerApellido,@SegundoApellido,@NDocumento,@TipoDocumento,@Telefono,@Direccion,1)
+end
+
+CREATE proc [dbo].[loginUsuarios2](@correo varchar(50),@contrasena varchar(50), @rol int, @disponible bit)
+as
+begin 
+select Correo, Contrasena, Rol, Disponible from Usuario
+where Correo=@correo and Contrasena= @contrasena and Rol=@rol and Disponible =@disponible
+end
+
+
+create proc [dbo].[vercorreos](@correo varchar(50))
+as
+begin
+select correo from  Usuario
+where @correo = Correo
+end
+
+
+
+create proc [dbo].[nuevaClave](@correo varchar (50),@contrasena varchar (50))
+aS
+BEGIN
+update Usuario
+set contrasena = @contrasena
+where correo = @correo
+END
+GO

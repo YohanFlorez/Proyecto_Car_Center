@@ -1,0 +1,77 @@
+
+create table Usuario(
+IdUsuario int identity(1,1) not null,
+Nombre varchar(100) not null,
+Apellido varchar(100) not null,
+Ndocumento varchar (100) not null,
+TipoDocumento int not null,
+Direccion varchar (100) not null,
+Correo varchar (100) not null,
+Contrasena varchar(100) not null,
+Rol int not null,
+Disponible bit not null,
+primary key (IdUsuario),
+foreign key (TipoDocumento) references TipoDocumentos(IdTipodocumento),
+foreign key (Rol) references Roles(IdRoles))
+
+
+
+Create table Roles(
+IdRoles int identity(1,1) not null,
+NombreRol varchar(50) not null
+Primary key(IdRoles))
+
+
+create table TipoDocumentos(
+IdTipodocumento int identity(1,1) not null,
+nombre varchar (50) not null,
+primary key(IdTipodocumento))
+
+
+
+Create table Repuesto(
+idRepuesto int identity(1,1),
+Nombre varchar(50) not null,
+PrecioUnitario int  not null,
+UnidadesDisponibles int not null,
+primary key(idRepuesto)
+)
+
+create table Mecanico(
+idMecanico int identity(1,1),
+PrimerNombre varchar(50) not null,
+SegundoNombre varchar(50) not null,
+PrimerApellido varchar(50) not null,
+SegundoApellido varchar(50) not null,
+NDocumento varchar(50) not null,
+TipoDocumento int not null,
+Telefono varchar(50) not null,
+Direccion varchar(50) not null,
+Estado bit not null,
+Primary key(idMecanico),
+foreign key(TipoDocumento)
+references TipoDocumentos(IdTipodocumento))
+
+Create table SolicitudMantenimiento(
+idSolicitud int identity (1,1),
+CodUsuario int not null,
+MarcaVehiculo varchar(50) not null,
+Modelo varchar(50) not null,
+Descripcion varchar(max) not null,
+Imagen varchar(500) not null,
+EstadoSolicitud varchar(50) not null,
+primary key(idSolicitud),
+foreign key (CodUsuario)
+references Usuario(IdUsuario))
+
+
+create table VentaRepuesto(
+IdVentaRepuesto int identity(1,1),
+CodSolicitud int not null,
+CodRepuesto int not null,
+NrepuestosVendidos int not null,
+Primary key(IdVentaRepuesto),
+foreign key(CodSolicitud)
+references SolicitudMantenimiento(IdSolicitud),
+foreign key (CodRepuesto)
+references Repuesto(IdRepuesto))
